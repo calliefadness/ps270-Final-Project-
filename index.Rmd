@@ -21,6 +21,7 @@ library(tidyverse)
 election_data <- read_csv("data/county_election.csv")
 broadband_data <- read_csv("data/county_broadband.csv")
 head(broadband_data)
+head(election_data)
 
 ```
 
