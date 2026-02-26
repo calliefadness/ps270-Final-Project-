@@ -7,8 +7,20 @@ output:
     self_contained: false
 ---
 
-
+\newpage
 
 ## Project thoughts
 
 I am interested in exploring data related to... voting patterns around the US
+
+My research question is: How is broadband internet access within a county related to Republican presidential vote share across the United States? My hypothesis is that counties with higher broadband access rates will have lower Republican vote share. This expectation is justified due to the media environment theory and political communication, arguing that greater internet access increases exposure to diverse news sources, widespread political discourse, and social networks that may shift attitudes away from traditional conservative strongholds, particularly in rural counties. My independent variable will be the broadband internet access rate, measured as the percentage of households in a county with a broadband internet subscription as of 2020, which can change and vary across urban v.s. rural counties. My dependent variable is the Republican presidential vote share, measured as the percentage of the two-party vote received by the Republican candidate in each county for the 2020 presidential election. If my hypothesis is correct, I expect to observe a negative and statistically significant coefficient on broadband access in a regression predicting Republican vote share. Evidence that would potentially disprove my hypothesis would include a statistically insignificant relationship or a positive relationship, meaning that greater broadband access is not actually associated with lower Republican electoral votes from 2020.
+
+Loading Packages:
+```{r}
+library(tidyverse)
+election_data <- read_csv("data/county_election.csv")
+broadband_data <- read_csv("data/county_broadband.csv")
+head(broadband_data)
+
+```
+
