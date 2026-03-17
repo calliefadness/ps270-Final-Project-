@@ -49,7 +49,7 @@ broadband_clean
 
 ```{r}
 first_visual <- ggplot(broadband_clean, aes(x = households)) +
-  geom_histogram(bins = 40, fill = "blue", color = "white") +
+  geom_histogram(bins = 60, fill = "blue", color = "white") +
   scale_x_log10() +
   labs(
     title = "Distribution of Households with Broadband Across U.S. Counties",
