@@ -18,6 +18,7 @@ My research question is: How is broadband internet access within a county relate
 Loading Packages:
 ```{r}
 library(tidyverse)
+library(dbplyr)
 ideology <- read_csv("data/county_election.csv")
 broadband <- read_csv("data/county_broadband.csv")
 head(broadband)
@@ -34,6 +35,8 @@ broadband_clean <- broadband |>
     households = S2801_C01_001E,
     margin_error = S2801_C01_001M
   ) |>
+  mutate(
+    households = as.numeric(households)) |>
   select(county, households, margin_error)
 
 ideology_clean <- ideology |>
@@ -41,7 +44,19 @@ ideology_clean <- ideology |>
 
 ideology_clean
 broadband_clean
+
+first_visual <- ggplot(broadband_clean, aes(x = households)) +
+  geom_histogram(bins = 40, fill = "steelblue", color = "white") +
+  scale_x_log10() +
+  labs(
+    title = "Distribution of Households Across U.S. Counties",
+    x = "Number of Households",
+    y = "Number of Counties"
+  )
+first_visual
 ```
+```
+
 
 
 
