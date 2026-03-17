@@ -18,10 +18,30 @@ My research question is: How is broadband internet access within a county relate
 Loading Packages:
 ```{r}
 library(tidyverse)
-election_data <- read_csv("data/county_election.csv")
-broadband_data <- read_csv("data/county_broadband.csv")
-head(broadband_data)
-head(election_data)
+ideology <- read_csv("data/county_election.csv")
+broadband <- read_csv("data/county_broadband.csv")
+head(broadband)
+head(ideology)
 
 ```
+
+
+Project milestone 3: data tidying 
+```{r}
+broadband_clean <- broadband |>
+  rename(
+    county = NAME,
+    households = S2801_C01_001E,
+    margin_error = S2801_C01_001M
+  ) |>
+  select(county, households, margin_error)
+
+ideology_clean <- ideology |>
+  select(state, county_name, candidate, candidatevotes, totalvotes)
+
+ideology_clean
+broadband_clean
+```
+
+
 
