@@ -45,17 +45,20 @@ ideology_clean <- ideology |>
 ideology_clean
 broadband_clean
 
+```
+
+```{r}
 first_visual <- ggplot(broadband_clean, aes(x = households)) +
-  geom_histogram(bins = 40, fill = "steelblue", color = "white") +
+  geom_histogram(bins = 40, fill = "blue", color = "white") +
   scale_x_log10() +
   labs(
-    title = "Distribution of Households Across U.S. Counties",
+    title = "Distribution of Households with Broadband Across U.S. Counties",
     x = "Number of Households",
     y = "Number of Counties"
   )
 first_visual
 ```
-```
+
 
 
 
