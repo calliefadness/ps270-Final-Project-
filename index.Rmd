@@ -30,7 +30,8 @@ head(ideology)
 Project milestone 3: data tidying 
 ```{r}
 wi_income_clean <- wi_county_income |>
-  select(GeoName, `2023`) |>
+  select(GeoName, Description, `2023`) |>
+  filter(Description == "Per capita personal income (dollars) 2/") |>
   filter(grepl(",", GeoName))
 income <- readr::parse_number(wi_income_clean$`2023`)
 
@@ -44,7 +45,7 @@ ideology_clean
 
 ```{r}
 
-income_visual <- ggplot(wi_income_clean, aes(x = `2023`)) +
+income_visual <- ggplot(wi_income_clean, aes(x = income)) +
   geom_histogram(bins = 30, fill = "blue", color = "white") +
   scale_x_continuous(
     labels = scales::dollar_format(),
