@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/county_broadband.csv","data/county_election.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/CAINC1_WI_1969_2023.csv","data/county_election.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1546,34 +1546,34 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-article">
 <div style="page-break-after: always;"></div>
 <h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to… voting patterns around the US</p>
-<p>My research question is: How is broadband internet access within a county related to Republican presidential vote share across the United States? My hypothesis is that counties with higher broadband access rates will have lower Republican vote share. This expectation is justified due to the media environment theory and political communication, arguing that greater internet access increases exposure to diverse news sources, widespread political discourse, and social networks that may shift attitudes away from traditional conservative strongholds, particularly in rural counties. My independent variable will be the broadband internet access rate, measured as the percentage of households in a county with a broadband internet subscription as of 2020, which can change and vary across urban v.s. rural counties. My dependent variable is the Republican presidential vote share, measured as the percentage of the two-party vote received by the Republican candidate in each county for U.S. presidential elections. If my hypothesis is correct, I expect to observe a negative and statistically significant coefficient on broadband access in a regression predicting Republican vote share. Evidence that would potentially disprove my hypothesis would include a statistically insignificant relationship or a positive relationship, meaning that greater broadband access is not actually associated with lower Republican electoral votes from 2020.</p>
+<p>I am interested in exploring data related to… voting patterns around Wisconsin and median household income (Had to change after the broadband data was not working)</p>
+<p>My research question is: How is median household income within a county in Wisconsin related to Republican presidential vote share in the state? My hypothesis is that Wisconsin counties with higher median household income will have lower Republican vote share. This expectation is supported by political communication research, which suggests that higher-income populations may have greater access to diverse news sources, broader social networks, and political discourse that can influence voting behavior, even in areas that might otherwise lean conservative. My independent variable will be the median household income in a Wisconsin county, measured in U.S. dollars using the most recent available estimates, which can vary widely between urban and rural counties. My dependent variable is the Republican presidential vote share in Wisconsin, measured as the percentage of the two-party vote received by the Republican candidate in each county for U.S. presidential elections. If my hypothesis is correct, I expect to observe a negative and statistically significant coefficient on median household income in a regression predicting Republican vote share. Evidence that would potentially disprove my hypothesis would include a statistically insignificant relationship or a positive relationship, indicating that higher income is not associated with lower Republican vote share at the county level in Wisconsin.</p>
 Loading Packages:
-I am using data from <a href="https://data.census.gov" class="uri">https://data.census.gov</a> and <a href="https://electionlab.mit.edu/data" class="uri">https://electionlab.mit.edu/data</a>
+I am using data from Bea.gov (Bureau of Economic Analysis) and <a href="https://electionlab.mit.edu/data" class="uri">https://electionlab.mit.edu/data</a> (MIT election data)
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dbplyr.tidyverse.org/'>dbplyr</a></span><span class='op'>)</span></span>
 <span><span class='va'>ideology</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/county_election.csv"</span><span class='op'>)</span></span>
-<span><span class='va'>broadband</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/county_broadband.csv"</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>broadband</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>wi_county_income</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/CAINC1_WI_1969_2023.csv"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>wi_county_income</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 6 × 127
-  GEO_ID         NAME     S2801_C01_001E S2801_C01_001M S2801_C01_002E
-  &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;         
-1 Geography      Geograp… Estimate!!Tot… Margin of Err… Estimate!!Tot…
-2 0500000US01001 Autauga… 21559          366            19711         
-3 0500000US01003 Baldwin… 84047          1143           77122         
-4 0500000US01005 Barbour… 9322           338            7437          
-5 0500000US01007 Bibb Co… 7259           299            6041          
-6 0500000US01009 Blount … 21205          430            18032         
-# ℹ 122 more variables: S2801_C01_002M &lt;chr&gt;, S2801_C01_003E &lt;chr&gt;,
-#   S2801_C01_003M &lt;chr&gt;, S2801_C01_004E &lt;chr&gt;, S2801_C01_004M &lt;chr&gt;,
-#   S2801_C01_005E &lt;chr&gt;, S2801_C01_005M &lt;chr&gt;, S2801_C01_006E &lt;chr&gt;,
-#   S2801_C01_006M &lt;chr&gt;, S2801_C01_007E &lt;chr&gt;, S2801_C01_007M &lt;chr&gt;,
-#   S2801_C01_008E &lt;chr&gt;, S2801_C01_008M &lt;chr&gt;, S2801_C01_009E &lt;chr&gt;,
-#   S2801_C01_009M &lt;chr&gt;, S2801_C01_010E &lt;chr&gt;, S2801_C01_010M &lt;chr&gt;,
-#   S2801_C01_011E &lt;chr&gt;, S2801_C01_011M &lt;chr&gt;, …</code></pre>
+<pre><code># A tibble: 6 × 63
+  GeoFIPS GeoName   Region TableName LineCode IndustryClassification
+  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;                 
+1 55000   Wisconsin      3 CAINC1           1 ...                   
+2 55000   Wisconsin      3 CAINC1           2 ...                   
+3 55000   Wisconsin      3 CAINC1           3 ...                   
+4 55001   Adams, WI      3 CAINC1           1 ...                   
+5 55001   Adams, WI      3 CAINC1           2 ...                   
+6 55001   Adams, WI      3 CAINC1           3 ...                   
+# ℹ 57 more variables: Description &lt;chr&gt;, Unit &lt;chr&gt;, `1969` &lt;chr&gt;,
+#   `1970` &lt;chr&gt;, `1971` &lt;chr&gt;, `1972` &lt;chr&gt;, `1973` &lt;chr&gt;,
+#   `1974` &lt;chr&gt;, `1975` &lt;chr&gt;, `1976` &lt;chr&gt;, `1977` &lt;chr&gt;,
+#   `1978` &lt;chr&gt;, `1979` &lt;chr&gt;, `1980` &lt;chr&gt;, `1981` &lt;chr&gt;,
+#   `1982` &lt;chr&gt;, `1983` &lt;chr&gt;, `1984` &lt;chr&gt;, `1985` &lt;chr&gt;,
+#   `1986` &lt;chr&gt;, `1987` &lt;chr&gt;, `1988` &lt;chr&gt;, `1989` &lt;chr&gt;,
+#   `1990` &lt;chr&gt;, `1991` &lt;chr&gt;, `1992` &lt;chr&gt;, `1993` &lt;chr&gt;, …</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ideology</span><span class='op'>)</span></span></code></pre>
 </div>
@@ -1592,66 +1592,100 @@ I am using data from <a href="https://data.census.gov" class="uri">https://data.
 Project milestone 3: data tidying
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>broadband_clean</span> <span class='op'>&lt;-</span> <span class='va'>broadband</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span></span>
-<span>    county <span class='op'>=</span> <span class='va'>NAME</span>,</span>
-<span>    households <span class='op'>=</span> <span class='va'>S2801_C01_001E</span>,</span>
-<span>    margin_error <span class='op'>=</span> <span class='va'>S2801_C01_001M</span></span>
-<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    households <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>households</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>county</span>, <span class='va'>households</span>, <span class='va'>margin_error</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wi_income_clean</span> <span class='op'>&lt;-</span> <span class='va'>wi_county_income</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>GeoName</span>, <span class='va'>Description</span>, <span class='va'>`2023`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Description</span> <span class='op'>==</span> <span class='st'>"Per capita personal income (dollars) 2/"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='va'>GeoName</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    income <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>`2023`</span><span class='op'>)</span>,</span>
+<span>    county_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>" County,.*"</span>, <span class='st'>""</span>, <span class='va'>GeoName</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>ideology_clean</span> <span class='op'>&lt;-</span> <span class='va'>ideology</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>state</span>, <span class='va'>county_name</span>, <span class='va'>candidate</span>, <span class='va'>candidatevotes</span>, <span class='va'>totalvotes</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>state_po</span>, <span class='va'>county_name</span>, <span class='va'>candidate</span>, <span class='va'>candidatevotes</span>, <span class='va'>totalvotes</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>republican_share <span class='op'>=</span> <span class='va'>candidatevotes</span> <span class='op'>/</span> <span class='va'>totalvotes</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>ideology_clean</span></span></code></pre>
+<span><span class='va'>wi_income_clean</span></span></code></pre>
 </div>
-<pre><code># A tibble: 94,151 × 5
-   state   county_name candidate       candidatevotes totalvotes
-   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;                    &lt;dbl&gt;      &lt;dbl&gt;
- 1 ALABAMA AUTAUGA     OTHER                      293      28281
- 2 ALABAMA AUTAUGA     CHASE OLIVER                65      28281
- 3 ALABAMA AUTAUGA     KAMALA D HARRIS           7439      28281
- 4 ALABAMA AUTAUGA     DONALD J TRUMP           20484      28281
- 5 ALABAMA BALDWIN     OTHER                     1276     122249
- 6 ALABAMA BALDWIN     DONALD J TRUMP           95798     122249
- 7 ALABAMA BALDWIN     KAMALA D HARRIS          24934     122249
- 8 ALABAMA BALDWIN     CHASE OLIVER               241     122249
- 9 ALABAMA BARBOUR     DONALD J TRUMP            5606       9855
-10 ALABAMA BARBOUR     KAMALA D HARRIS           4158       9855
-# ℹ 94,141 more rows</code></pre>
+<pre><code># A tibble: 73 × 5
+   GeoName      Description                  `2023` income county_name
+   &lt;chr&gt;        &lt;chr&gt;                        &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;      
+ 1 Adams, WI    Per capita personal income … 46249   46249 Adams, WI  
+ 2 Ashland, WI  Per capita personal income … 49350   49350 Ashland, WI
+ 3 Barron, WI   Per capita personal income … 60564   60564 Barron, WI 
+ 4 Bayfield, WI Per capita personal income … 55598   55598 Bayfield, …
+ 5 Brown, WI    Per capita personal income … 65199   65199 Brown, WI  
+ 6 Buffalo, WI  Per capita personal income … 57210   57210 Buffalo, WI
+ 7 Burnett, WI  Per capita personal income … 51815   51815 Burnett, WI
+ 8 Calumet, WI  Per capita personal income … 61851   61851 Calumet, WI
+ 9 Chippewa, WI Per capita personal income … 56815   56815 Chippewa, …
+10 Clark, WI    Per capita personal income … 50617   50617 Clark, WI  
+# ℹ 63 more rows</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>broadband_clean</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>ideology_clean</span></span></code></pre>
 </div>
-<pre><code># A tibble: 3,222 × 3
-   county                   households margin_error                   
-   &lt;chr&gt;                         &lt;dbl&gt; &lt;chr&gt;                          
- 1 Geographic Area Name             NA Margin of Error!!Total!!Total …
- 2 Autauga County, Alabama       21559 366                            
- 3 Baldwin County, Alabama       84047 1143                           
- 4 Barbour County, Alabama        9322 338                            
- 5 Bibb County, Alabama           7259 299                            
- 6 Blount County, Alabama        21205 430                            
- 7 Bullock County, Alabama        3429 195                            
- 8 Butler County, Alabama         6649 282                            
- 9 Calhoun County, Alabama       44572 642                            
-10 Chambers County, Alabama      13582 418                            
-# ℹ 3,212 more rows</code></pre>
+<pre><code># A tibble: 94,151 × 6
+   state_po county_name candidate       candidatevotes totalvotes
+   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;                    &lt;dbl&gt;      &lt;dbl&gt;
+ 1 AL       AUTAUGA     OTHER                      293      28281
+ 2 AL       AUTAUGA     CHASE OLIVER                65      28281
+ 3 AL       AUTAUGA     KAMALA D HARRIS           7439      28281
+ 4 AL       AUTAUGA     DONALD J TRUMP           20484      28281
+ 5 AL       BALDWIN     OTHER                     1276     122249
+ 6 AL       BALDWIN     DONALD J TRUMP           95798     122249
+ 7 AL       BALDWIN     KAMALA D HARRIS          24934     122249
+ 8 AL       BALDWIN     CHASE OLIVER               241     122249
+ 9 AL       BARBOUR     DONALD J TRUMP            5606       9855
+10 AL       BARBOUR     KAMALA D HARRIS           4158       9855
+# ℹ 94,141 more rows
+# ℹ 1 more variable: republican_share &lt;dbl&gt;</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>first_visual</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>broadband_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>households</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>60</span>, fill <span class='op'>=</span> <span class='st'>"blue"</span>, color <span class='op'>=</span> <span class='st'>"white"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_log10</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>income_visual</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>wi_income_clean</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>income</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>30</span>, fill <span class='op'>=</span> <span class='st'>"blue"</span>, color <span class='op'>=</span> <span class='st'>"white"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_continuous</a></span><span class='op'>(</span></span>
+<span>    labels <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/dollar_format.html'>dollar_format</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
+<span>    limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30000</span>, <span class='fl'>100000</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    title <span class='op'>=</span> <span class='st'>"Distribution of Households with Broadband Across U.S. Counties"</span>,</span>
-<span>    x <span class='op'>=</span> <span class='st'>"Number of Households"</span>,</span>
+<span>    title <span class='op'>=</span> <span class='st'>"Distribution of Median Household Income Across Wisconsin Counties"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Median Household Income (USD)"</span>,</span>
 <span>    y <span class='op'>=</span> <span class='st'>"Number of Counties"</span></span>
 <span>  <span class='op'>)</span></span>
-<span><span class='va'>first_visual</span></span></code></pre>
+<span><span class='va'>income_visual</span></span></code></pre>
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" alt="" width="624" /></p>
+</div>
+<em>Project milestone 4: Used some LLM in this because joining data was difficult with my two data sources.</em>
+This plot is my second visualization. I had to use LLM to use options(scipen = #) to get scientific notation away, along with using [1:n] because I needed to have a 1:1 ratio for each variable between data sets.My research question is: How is median household income within a county in Wisconsin related to Republican presidential vote share in the state? This visual on the graph helps see the relationship between both data sources (which was complex to code together into one).
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>wi_income_clean</span> <span class='op'>&lt;-</span> <span class='va'>wi_income_clean</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    income <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>wi_income_clean</span><span class='op'>$</span><span class='va'>income</span><span class='op'>)</span>,</span>
+<span>    county_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>" County,.*"</span>, <span class='st'>""</span>, <span class='va'>GeoName</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span> </span>
+<span> </span>
+<span><span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>wi_income_clean</span><span class='op'>$</span><span class='va'>income</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>ideology_clean</span><span class='op'>$</span><span class='va'>republican_share</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>plot_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  income <span class='op'>=</span> <span class='va'>wi_income_clean</span><span class='op'>$</span><span class='va'>income</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>n</span><span class='op'>]</span>,</span>
+<span>  rep_share <span class='op'>=</span> <span class='va'>ideology_clean</span><span class='op'>$</span><span class='va'>republican_share</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>n</span><span class='op'>]</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>scipen <span class='op'>=</span> <span class='fl'>999</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>plot_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>income</span>, y <span class='op'>=</span> <span class='va'>rep_share</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Income vs Republican Vote Share (WI Counties)"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Income"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Republican Vote Share"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" alt="" width="624" /></p>
 </div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

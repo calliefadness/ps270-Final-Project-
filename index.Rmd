@@ -33,8 +33,8 @@ wi_income_clean <- wi_county_income |>
   select(GeoName, Description, `2023`) |>
   filter(Description == "Per capita personal income (dollars) 2/") |>
   filter(grepl(",", GeoName)) |>
- mutate(
-    income = as.numeric(wi_income_clean$`2023`),
+mutate(
+    income = as.numeric(`2023`),
     county_name = sub(" County,.*", "", GeoName)
   )
 
@@ -62,25 +62,23 @@ income_visual <- ggplot(wi_income_clean, aes(x = income)) +
 income_visual
 ```
 
-*Project milestone 4: Used some LLM in this because joining data was difficult with my two data sources.* 
-This creates rep_data, meaning that i changed labels to focus specifically on just Trump vote and in Wisconsin from both data sets. I created a rep_share variable that took a percentage of candidatevotes divided by total votes. 
+*Project milestone 4: Used some LLM in this because joining data was difficult with my two data sources.*
+This plot is my second visualization. I had to use LLM to use options(scipen = #) to get scientific notation away, along with using [1:n] because I needed to have a 1:1 ratio for each variable between data sets.My research question is: How is median household income within a county in Wisconsin related to Republican presidential vote share in the state? This visual on the graph helps see the relationship between both data sources (which was complex to code together into one). I can see that lower income around the 45k to 62k range tends to have a larger republican vote share within Wisconsin counties. 
 ```{r}
-rep_data <- ideology_clean[
-  ideology_clean$candidate == "DONALD J TRUMP" &
-  ideology_clean$state_po == "WI", ]
 
-rep_share <- rep_data$candidatevotes / rep_data$totalvotes
-```
-
-This plot is my second visualization. I had to use LLM to use options(scipen = #) to get scientific notation away, along with using [1:n] because I needed to have a 1:1 ratio for each variable between data sets. 
-My research question is: How is median household income within a county in Wisconsin related to Republican presidential vote share in the state? This visual on the graph helps see the relationship between both data sources (which was complex to code together into one).
-```{r}
-n <- min(length(income), length(rep_share))
+wi_income_clean <- wi_income_clean |>
+  mutate(
+    income = as.numeric(wi_income_clean$income),
+    county_name = sub(" County,.*", "", GeoName)
+  ) 
+ 
+n <- min(length(wi_income_clean$income), length(ideology_clean$republican_share))
 
 plot_data <- data.frame(
-  income = income[1:n],
-  rep_share = rep_share[1:n]
+  income = wi_income_clean$income[1:n],
+  rep_share = ideology_clean$republican_share[1:n]
 )
+
 options(scipen = 999)
 
 ggplot(plot_data, aes(x = income, y = rep_share)) +
@@ -92,6 +90,7 @@ ggplot(plot_data, aes(x = income, y = rep_share)) +
     y = "Republican Vote Share"
   )
 ```
+
 
 
 
