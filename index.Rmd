@@ -30,15 +30,12 @@ head(ideology)
 Project milestone 3: data tidying 
 ```{r}
 wi_income_clean <- wi_county_income |>
-  select(GeoName, Description, `2023`) |>
-  filter(Description == "Per capita personal income (dollars) 2/") |>
-  rename(county = GeoName, median_income = `2023`) |>
-  mutate(
-    median_income = readr::parse_number(median_income)
-  )
+  select(GeoName, `2023`) |>
+  filter(grepl(",", GeoName))
+income <- readr::parse_number(wi_income_clean$`2023`)
 
 ideology_clean <- ideology |>
-  select(state_po, county_name, candidate, candidatevotes, totalvotes)
+  select(state_po, county_name, candidate, candidatevotes, totalvotes) 
 
 wi_income_clean
 ideology_clean
@@ -46,7 +43,8 @@ ideology_clean
 ```
 
 ```{r}
-income_visual <- ggplot(wi_income_clean, aes(x = median_income)) +
+
+income_visual <- ggplot(wi_income_clean, aes(x = `2023`)) +
   geom_histogram(bins = 30, fill = "blue", color = "white") +
   scale_x_continuous(
     labels = scales::dollar_format(),
@@ -61,30 +59,9 @@ income_visual
 ```
 
 ```{r}
-rep_data <- ideology_clean[
-  ideology_clean$candidate == "DONALD J TRUMP" &
-  ideology_clean$state_po == "WI", ]
+
+
 ```
-rep_data$rep_share <- rep_data$candidatevotes / rep_data$totalvotes
-
-plotting_data <- data.frame(
-  income = wi_income_clean$median_income[1:n],
-  rep_share = rep_data$rep_share[1:n]
-)
-
-ggplot(plotting_data, aes(x = income, y = rep_share)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(
-    title = "Income vs Republican Vote Share (WI Counties)",
-    x = "Median Income",
-    y = "Republican Vote Share"
-  )
-
-ggplot
-summary(lm(rep_share ~ income, data = plotting_data))
-```
-
 
 
 
