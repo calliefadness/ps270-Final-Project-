@@ -11,52 +11,78 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to... voting patterns around the US
+I am interested in exploring data related to... voting patterns around Wisconsin and median household income (Had to change after the broadband data was not working)
 
-My research question is: How is broadband internet access within a county related to Republican presidential vote share across the United States? My hypothesis is that counties with higher broadband access rates will have lower Republican vote share. This expectation is justified due to the media environment theory and political communication, arguing that greater internet access increases exposure to diverse news sources, widespread political discourse, and social networks that may shift attitudes away from traditional conservative strongholds, particularly in rural counties. My independent variable will be the broadband internet access rate, measured as the percentage of households in a county with a broadband internet subscription as of 2020, which can change and vary across urban v.s. rural counties. My dependent variable is the Republican presidential vote share, measured as the percentage of the two-party vote received by the Republican candidate in each county for U.S. presidential elections. If my hypothesis is correct, I expect to observe a negative and statistically significant coefficient on broadband access in a regression predicting Republican vote share. Evidence that would potentially disprove my hypothesis would include a statistically insignificant relationship or a positive relationship, meaning that greater broadband access is not actually associated with lower Republican electoral votes from 2020.
+My research question is: How is median household income within a county in Wisconsin related to Republican presidential vote share in the state? My hypothesis is that Wisconsin counties with higher median household income will have lower Republican vote share. This expectation is supported by political communication research, which suggests that higher-income populations may have greater access to diverse news sources, broader social networks, and political discourse that can influence voting behavior, even in areas that might otherwise lean conservative. My independent variable will be the median household income in a Wisconsin county, measured in U.S. dollars using the most recent available estimates, which can vary widely between urban and rural counties. My dependent variable is the Republican presidential vote share in Wisconsin, measured as the percentage of the two-party vote received by the Republican candidate in each county for U.S. presidential elections. If my hypothesis is correct, I expect to observe a negative and statistically significant coefficient on median household income in a regression predicting Republican vote share. Evidence that would potentially disprove my hypothesis would include a statistically insignificant relationship or a positive relationship, indicating that higher income is not associated with lower Republican vote share at the county level in Wisconsin.
 
 Loading Packages:
+I am using data from Bea.gov (Bureau of Economic Analysis) and https://electionlab.mit.edu/data (MIT election data)
 ```{r}
 library(tidyverse)
 library(dbplyr)
 ideology <- read_csv("data/county_election.csv")
-broadband <- read_csv("data/county_broadband.csv")
-head(broadband)
+wi_county_income <- read_csv("data/CAINC1_WI_1969_2023.csv")
+head(wi_county_income)
 head(ideology)
 
 ```
 
-
 Project milestone 3: data tidying 
 ```{r}
-broadband_clean <- broadband |>
-  rename(
-    county = NAME,
-    households = S2801_C01_001E,
-    margin_error = S2801_C01_001M
-  ) |>
+wi_income_clean <- wi_county_income |>
+  select(GeoName, Description, `2023`) |>
+  filter(Description == "Per capita personal income (dollars) 2/") |>
+  rename(county = GeoName, median_income = `2023`) |>
   mutate(
-    households = as.numeric(households)) |>
-  select(county, households, margin_error)
+    median_income = readr::parse_number(median_income)
+  )
 
 ideology_clean <- ideology |>
-  select(state, county_name, candidate, candidatevotes, totalvotes)
+  select(state_po, county_name, candidate, candidatevotes, totalvotes)
 
+wi_income_clean
 ideology_clean
-broadband_clean
 
 ```
 
 ```{r}
-first_visual <- ggplot(broadband_clean, aes(x = households)) +
-  geom_histogram(bins = 60, fill = "blue", color = "white") +
-  scale_x_log10() +
+income_visual <- ggplot(wi_income_clean, aes(x = median_income)) +
+  geom_histogram(bins = 30, fill = "blue", color = "white") +
+  scale_x_continuous(
+    labels = scales::dollar_format(),
+    limits = c(30000, 100000)
+  ) +
   labs(
-    title = "Distribution of Households with Broadband Across U.S. Counties",
-    x = "Number of Households",
+    title = "Distribution of Median Household Income Across Wisconsin Counties",
+    x = "Median Household Income (USD)",
     y = "Number of Counties"
   )
-first_visual
+income_visual
+```
+
+```{r}
+rep_data <- ideology_clean[
+  ideology_clean$candidate == "DONALD J TRUMP" &
+  ideology_clean$state_po == "WI", ]
+```
+rep_data$rep_share <- rep_data$candidatevotes / rep_data$totalvotes
+
+plotting_data <- data.frame(
+  income = wi_income_clean$median_income[1:n],
+  rep_share = rep_data$rep_share[1:n]
+)
+
+ggplot(plotting_data, aes(x = income, y = rep_share)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Income vs Republican Vote Share (WI Counties)",
+    x = "Median Income",
+    y = "Republican Vote Share"
+  )
+
+ggplot
+summary(lm(rep_share ~ income, data = plotting_data))
 ```
 
 
