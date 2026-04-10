@@ -57,7 +57,7 @@ income_visual <- ggplot(wi_income_clean, aes(x = `2023`)) +
   )
 income_visual
 ```
-
+Project milestone 4: Used some LLM in this because joining data was difficult with my two data sources. 
 ```{r}
 
 
