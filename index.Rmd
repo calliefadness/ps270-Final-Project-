@@ -61,12 +61,14 @@ ideology_clean <- ideology_wi |>
 wi_income_clean |>
   head(10) |>
   knitr::kable(
+    col.names = c("County", "Income"),
     caption = "WI County Income Data"
   )
 
 ideology_clean |>
   head(10) |>
   knitr::kable(
+    col.names = c("County", "Republican Vote"),
     caption = "County Election Data with Republican Vote Share"
   )
 
@@ -92,8 +94,6 @@ income_visual
 
 ##Results Section
 
-
-*Project milestone 4: Used some LLM in this because joining data was difficult with my two data sources.*
 This plot is my second visualization. I had to use LLM to use options(scipen = #) to get scientific notation away, along with using [1:n] because I needed to have a 1:1 ratio for each variable between data sets.My research question is: How is median household income within a county in Wisconsin related to Republican presidential vote share in the state? This visual on the graph helps see the relationship between both data sources (which was complex to code together into one). I can see that lower income around the 45k to 62k range tends to have a larger republican vote share within Wisconsin counties. 
 ```{r}
 merged_data <- inner_join(wi_income_clean, ideology_clean, by = "county_name")
@@ -125,9 +125,17 @@ broom::tidy(model) |>
   )
 
 ```
-
+**Scatter plot analysis:**
   To view the relationship between median household income and Republican presidential vote share across Wisconsin counties, I created a scatter plot with a linear regression line. The plot shows a weak but slightly positive relationship between income and Republican vote share. Counties with higher median incomes tend to have somewhat higher Republican vote share on average, but there is still some observable variation across counties with similar income levels, particularly in the 45,000 to 65,000 income range. This suggests that income alone does not strongly predict voting patterns across Wisconsin.The regression results support this. The coefficient for income (measured in 10,000 dollar units) is positive, indicating that higher-income counties tend to have slightly higher Republican vote share. Specifically, a $10,000 increase in median household income is associated with an increase in Republican vote share equal to approximately 0.004 in the estimated model. However, this relationship is not statistically significant, suggesting we aren't able to confidently conclude that income is related to vote share in this data set.
+\newline
+
+**Results and connection to hypothesis:**
   Overall, these results do not support my original hypothesis, which predicted that higher-income counties would have lower Republican vote share. Instead, the estimated relationship is weakly positive and statistically indistinguishable from zero. Even if interpreted substantively, the effect size is very small, meaning that differences in income correspond to only minor changes in predicted vote share. Finally, this analysis should not be interpreted causally. Income alone explains only a small portion of the variation in voting outcomes, suggesting that other factors—such as urban–rural differences, education levels, and Wisconsin’s status as a competitive “purple” state—are likely more important in shaping county-level political behavior.
+\newline
+
+**Standard error and p-values from this data:**
+  This data regression shows under income_10k variable that there is a 0.01 standard error, meaning that 
+
 
 ## Conclusion  
 
