@@ -10,7 +10,7 @@ output: html_document
 ## Exploring data related to voting patterns around Wisconsin and median household income 
 
 **Hypothesis**
-My research question is: *How is median household income within a county in Wisconsin related to Republican presidential vote share in the state?* 
+**How is median household income within a county in Wisconsin related to Republican presidential vote share in the state?** 
 
 \newline
 
@@ -18,10 +18,16 @@ My hypothesis is that Wisconsin counties with higher median household income wil
 
 Loading Packages:
 I am using data from Bea.gov (Bureau of Economic Analysis) and https://electionlab.mit.edu/data (MIT election data)
-```{r, echo=FALSE}
+```{r, include=FALSE}
+
+knitr::opts_chunk$set(message = FALSE,warning = FALSE)
 
 library(tidyverse)
 library(modelsummary)
+
+```
+
+```{r, echo=FALSE}
 
 ideology <- readr::read_csv("data/county_election.csv", show_col_types = FALSE)
 
@@ -158,6 +164,10 @@ broom::tidy(model) |>
 
 ## Conclusion  
 In closing, I found little support for my hypothesis to prove an end result that median household income is strongly related to Republican presidential vote share across Wisconsin counties. Both the scatter plot and regression analysis showed only a very weak positive relationship. The main income coefficient (p-value) was not statistically significant. This suggests that differences in county income alone do not meaningfully explain variation in Republican voting patterns in Wisconsin. One major limitation of this analysis is that it only includes one predictor variable, which increases the risk of omitted confounding bias because other important factors—such as education levels, rural versus urban geography, racial demographics, or cultural influences—may better explain county voting behavior. In addition, this is observational county-level data, so the results from the election aren't correlated with the income that is reported, as we don't know who voted out of that sample. Data quality issues, missing values, or differences in how counties are measured across datasets could also have affected my findings, although I did my best to merge the sets to my best abilities. If I had more time and resources, I would improve the analysis by adding additional demographic and political variables, using a run through of multiple-variable regressions, and using a timeline of data across multiple election years to better understand how economic conditions interact with voting behavior over time.
+
+**DISCLAIMER**
+
+I have used LLM for this project in order to combine two very different and complex data sets for my project. I made sure to use it with integrity and ensure that I would not override my own work by using it. 
 
 ```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
 
