@@ -105,9 +105,9 @@ ggplot(ideology_clean, aes(x = republican_share)) +
 ```
  
 
-**Distribution of Median Household Income Across WI Counties Analysis-**
+**Independent Variable: Distribution of Median Household Income Across WI Counties Analysis-**
 \newline
-This examines whether median household income in Wisconsin counties is related to Republican presidential vote share. The outcome variable is Republican vote share, measured as the proportion of total presidential votes in each county that went to the Republican candidate. The main predictor is median household income, measured in U.S. dollars using county-level income data. By combining these two datasets by county name, I can compare economic differences across counties with political voting patterns.
+The distribution of median household income across Wisconsin Counties is sourced from the Bureau of Economic Analysis as of 2023. This examines whether median household income in Wisconsin counties is related to Republican presidential vote share as of. The outcome variable is Republican vote share, measured as the proportion of total presidential votes in each county that went to the Republican candidate. The main predictor is median household income, measured in U.S. dollars using county-level income data. By combining these two data sets by county name, I can compare economic differences across counties with political voting patterns.
 \newline
 
 My hypothesis is that counties with higher median household incomes may have different levels of Republican vote share than lower income counties. To visualize and analyze this relationship, I use two visualizations and a linear regression model. If the slope coefficient for income is statistically significant (p-value less than 0.05), I would reject the null hypothesis of no relationship between income and Republican vote share. If the p-value is greater than 0.05, I fail to reject the null hypothesis, so income alone would not significantly predict Republican vote share.
@@ -115,8 +115,8 @@ My hypothesis is that counties with higher median household incomes may have dif
 
 The histogram above shows the distribution of median household income across Wisconsin counties. Most counties fall between roughly $45,000 and $65,000, with fewer counties at very low or very high income levels. This indicates that Wisconsin county incomes are mostly concentrated around the middle-income range, which is useful context before examining whether these differences are associated with voting behavior.
 
-**Distributuion of Republican Vote Share Across WI Counties (2024) Analysis-**
-This histogram shows that there is a concentration of Republican votes in the 49-55% range. This shows that voters throughout counties in Wisconsin voted on average more Rpublican (in favor of Donald Trump). Overall, the distribution shows that Republican candidates, including Donald Trump in 2024, received relatively strong and consistent support across a majority of counties, with most falling near or slightly above the 50% threshold. This makes sense since Trump previously won Wisconsin in the 2024 general election. 
+**Dependent Variable: Distributuion of Republican Vote Share Across WI Counties (2024) Analysis-**
+The distribution of Republican vote share across Wisconsin is sourced from the MIT election data lab as of 2024. This histogram shows that there is a concentration of Republican votes in the 49-55% range. This shows that voters throughout counties in Wisconsin voted on average more Rpublican (in favor of Donald Trump). Overall, the distribution shows that Republican candidates, including Donald Trump in 2024, received relatively strong and consistent support across a majority of counties, with most falling near or slightly above the 50% threshold. This makes sense since Trump previously won Wisconsin in the 2024 general election. 
 
 ## Results Section 
 
