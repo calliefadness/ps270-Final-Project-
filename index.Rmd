@@ -99,7 +99,7 @@ ggplot(ideology_clean, aes(x = republican_share)) +
   geom_histogram(bins = 30, fill = "red", color = "white") +
   scale_x_continuous(labels = scales::percent_format()) +
   labs(
-    title = "Distribution of Republican Vote Share Across Wisconsin Counties",
+    title = "Distribution of 2024 Republican Vote Share Across Wisconsin Counties",
     x = "WI Republican Vote Share",
     y = "WI Proportion of Counties"
   )
