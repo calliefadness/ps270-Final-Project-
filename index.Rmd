@@ -136,13 +136,17 @@ ggplot(merged_data, aes(x = income, y = republican_share)) +
 ```{r, echo=FALSE}
 
 merged_data <- merged_data |>
-  mutate(income_10k = income / 10000)
+  mutate("income_10k" = income / 10000) 
 
 model <- lm(republican_share ~ income_10k, data = merged_data)
 
-modelsummary(model, stars = TRUE, fmt = 5)
+modelsummary(
+  model,
+  coef_map = c("income_10k" = "Income ($10ks)"))
 
 broom::tidy(model) |>
+  dplyr::mutate(term = dplyr::recode(term,
+                                     income_10k = "Income ($10ks)")) |>
   knitr::kable(
     digits = 3,
     caption = "Regression Results: WI Republican Vote Share on Median Household Income"
