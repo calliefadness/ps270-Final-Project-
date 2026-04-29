@@ -52,7 +52,7 @@ ideology_clean <- ideology_wi |>
   filter(state_po == "WI", party == "REPUBLICAN") |>
   mutate(county_name = tolower(county_name)) |>
   group_by(county_name) |>
-  summarise(
+  summarize(
     republican_share = sum(candidatevotes) / sum(totalvotes),
     .groups = "drop"
   )
@@ -61,14 +61,15 @@ wi_income_clean |>
   head(10) |>
   knitr::kable(
     col.names = c("WI County", "Income"),
-    caption = "WI County Income Data"
+    caption = "Glance at WI County Income Data"
   )
 
 ideology_clean |>
   head(10) |>
   knitr::kable(
     col.names = c("WI County", "Republican Vote"),
-    caption = "County Election Data with Republican Vote Share"
+    caption = "Glance at County Election Data with Republican Vote Share",
+    digits = 3
   )
 
 ```
